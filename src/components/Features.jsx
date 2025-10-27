@@ -1,6 +1,6 @@
 import React from 'react'
 import { CheckCircle2, Shield, Zap } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 const features = [
   {
@@ -21,14 +21,15 @@ const features = [
 ]
 
 export default function Features() {
+  const prefersReduced = useReducedMotion()
   return (
     <section id="features" className="py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: prefersReduced ? 0.25 : 0.5 }}
           className="text-center max-w-2xl mx-auto"
         >
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">Everything you need for scripting</h2>
@@ -38,12 +39,12 @@ export default function Features() {
           {features.map((f, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: prefersReduced ? 0 : 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.45, delay: i * 0.05 }}
-              whileHover={{ y: -4 }}
-              className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm"
+              transition={{ duration: prefersReduced ? 0.25 : 0.45, delay: i * 0.05 }}
+              whileHover={prefersReduced ? undefined : { y: -4 }}
+              className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm will-change-transform"
             >
               <div className="h-10 w-10 rounded-lg bg-fuchsia-500/10 flex items-center justify-center ring-1 ring-inset ring-white/10">
                 {f.icon}

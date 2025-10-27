@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Check, Star, Rocket } from 'lucide-react'
 
 const plans = [
@@ -79,15 +79,16 @@ const testimonials = [
 
 export default function Pricing() {
   const [open, setOpen] = useState(0)
+  const prefersReduced = useReducedMotion()
 
   return (
     <section id="pricing" className="py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: prefersReduced ? 0.25 : 0.5 }}
           className="text-center max-w-2xl mx-auto"
         >
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">Simple, fair pricing</h2>
@@ -98,12 +99,12 @@ export default function Pricing() {
           {plans.map((p, i) => (
             <motion.div
               key={p.name}
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: prefersReduced ? 0 : 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.45, delay: i * 0.05 }}
-              whileHover={{ y: -4 }}
-              className={`relative overflow-hidden rounded-2xl border ${p.featured ? 'border-pink-500/40' : 'border-white/10'} bg-white/5 p-6`}>
+              transition={{ duration: prefersReduced ? 0.25 : 0.45, delay: i * 0.05 }}
+              whileHover={prefersReduced ? undefined : { y: -4 }}
+              className={`relative overflow-hidden rounded-2xl border ${p.featured ? 'border-pink-500/40' : 'border-white/10'} bg-white/5 p-6 will-change-transform`}>
               {p.featured && (
                 <div className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-pink-600/20 px-2.5 py-1 text-xs font-medium text-pink-300 border border-pink-500/40">
                   <Star className="h-3.5 w-3.5" /> Popular
@@ -136,10 +137,10 @@ export default function Pricing() {
         {/* Testimonials */}
         <section id="testimonials" className="mt-20">
           <motion.h3
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: prefersReduced ? 0 : 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.45 }}
+            transition={{ duration: prefersReduced ? 0.25 : 0.45 }}
             className="text-2xl font-semibold text-white text-center"
           >
             What users had to say
@@ -148,11 +149,11 @@ export default function Pricing() {
             {testimonials.map((t, i) => (
               <motion.blockquote
                 key={t.name}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: prefersReduced ? 0 : 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.45, delay: i * 0.05 }}
-                className="relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6"
+                transition={{ duration: prefersReduced ? 0.25 : 0.45, delay: i * 0.05 }}
+                className="relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 will-change-transform"
               >
                 <p className="text-slate-200">“{t.quote}”</p>
                 <footer className="mt-4 text-sm text-slate-400">— {t.name}, {t.role}</footer>
@@ -165,10 +166,10 @@ export default function Pricing() {
         {/* FAQ */}
         <section id="faq" className="mt-20">
           <motion.h3
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: prefersReduced ? 0 : 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.45 }}
+            transition={{ duration: prefersReduced ? 0.25 : 0.45 }}
             className="text-2xl font-semibold text-white text-center"
           >
             Frequently asked questions
@@ -192,7 +193,7 @@ export default function Pricing() {
                 <motion.div
                   initial={false}
                   animate={{ height: open === i ? 'auto' : 0, opacity: open === i ? 1 : 0 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: prefersReduced ? 0.18 : 0.25 }}
                   className="overflow-hidden"
                 >
                   <p className="mt-3 text-slate-300">{item.a}</p>
