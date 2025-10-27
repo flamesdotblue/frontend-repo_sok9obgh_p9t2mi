@@ -1,96 +1,115 @@
-import React, { useEffect, useState } from 'react'
-import { Sparkles, Rocket } from 'lucide-react'
-import Spline from '@splinetool/react-spline'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import Spline from '@splinetool/react-spline';
 
-function Typewriter({ text, speed = 22 }) {
-  const [display, setDisplay] = useState('')
-  const [idx, setIdx] = useState(0)
-
-  useEffect(() => {
-    setDisplay('')
-    setIdx(0)
-  }, [text])
-
-  useEffect(() => {
-    if (idx > text.length) return
-    const id = setTimeout(() => {
-      setDisplay(text.slice(0, idx))
-      setIdx((i) => i + 1)
-    }, speed)
-    return () => clearTimeout(id)
-  }, [idx, text, speed])
-
-  return (
-    <span>
-      {display}
-      <span className="inline-block w-[1px] translate-y-1 ml-[2px] h-7 bg-white/80 animate-pulse" aria-hidden />
-    </span>
-  )
-}
+const SPLINE_URL = 'https://prod.spline.design/ns1MlpZQDFS29uiL/scene.splinecode';
 
 export default function Hero() {
-  const prefersReduced = useReducedMotion()
-  const [mounted, setMounted] = useState(false)
+  const shouldReduce = useReducedMotion();
+  const [mount3D, setMount3D] = useState(false);
+  const [title, setTitle] = useState('');
+  const fullTitle = 'Build faster. Launch smarter. Swyra.';
+  const rafId = useRef(0);
+
+  // Defer heavy 3D mounting to after first paint
   useEffect(() => {
-    // Defer heavy 3D scene until after first paint
-    const id = requestAnimationFrame(() => setMounted(true))
-    return () => cancelAnimationFrame(id)
-  }, [])
+    if (shouldReduce) return; // skip spline entirely if reduced motion
+    rafId.current = requestAnimationFrame(() => setMount3D(true));
+    return () => cancelAnimationFrame(rafId.current);
+  }, [shouldReduce]);
+
+  // Typewriter effect
+  useEffect(() => {
+    let i = 0;
+    const delay = 22;
+    const interval = setInterval(() => {
+      setTitle(fullTitle.slice(0, i + 1));
+      i += 1;
+      if (i >= fullTitle.length) clearInterval(interval);
+    }, delay);
+    return () => clearInterval(interval);
+  }, []);
+
+  const subtitle = useMemo(
+    () => 'A next-gen platform for stunning product sites with realtime 3D, motion, and performance baked in.',
+    []
+  );
 
   return (
-    <section className="relative min-h-[72vh] md:min-h-[82vh] overflow-hidden">
-      {/* Spline full-cover background (fintech boarding pass cover asset) */}
-      <div className="absolute inset-0">
-        {mounted && (
-          <Spline scene="https://prod.spline.design/O-AdlP9lTPNz-i8a/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+    <section className="relative min-h-[92vh] w-full bg-[#0a0a0b]" id="top">
+      <div className="absolute inset-0 overflow-hidden">
+        {!shouldReduce && mount3D && (
+          <Spline scene={SPLINE_URL} style={{ width: '100%', height: '100%' }} />
         )}
+
+        {/* Fallback gradient/texture for reduced motion or while loading */}
+        {(shouldReduce || !mount3D) && (
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0a0a0b] to-[#0a0a0b]" />
+            <div className="absolute inset-0 opacity-40"
+              style={{
+                backgroundImage:
+                  'radial-gradient(600px 300px at 50% 35%, rgba(255,255,255,0.08), transparent), radial-gradient(800px 400px at 50% 65%, rgba(236,72,153,0.12), transparent)'
+              }}
+            />
+          </div>
+        )}
+
+        {/* Glow overlays - must not block interaction */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -inset-x-24 top-0 h-40 bg-gradient-to-b from-white/10 to-transparent" />
+          <div className="absolute -inset-x-24 bottom-0 h-56 bg-gradient-to-t from-fuchsia-600/20 via-pink-500/10 to-transparent" />
+        </div>
       </div>
 
-      {/* Single subtle gradient overlay that won't block interactions */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"
-        aria-hidden
-      />
+      <div className="relative z-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28 sm:py-36">
+          <motion.h1
+            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-100"
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            style={{ willChange: 'transform' }}
+          >
+            {title}
+            <span className="animate-pulse">▍</span>
+          </motion.h1>
 
-      {/* Content */}
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28">
-        <motion.div
-          initial={{ opacity: 0, y: prefersReduced ? 0 : 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReduced ? 0.2 : 0.6, ease: 'easeOut' }}
-          className="max-w-2xl"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur">
-            <Sparkles className="h-4 w-4 text-fuchsia-400" /> Fresh build
-          </span>
-          <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white">
-            <Typewriter text="Swyra — a modern Roblox scripting runtime" speed={22} />
-          </h1>
-          <p className="mt-4 text-slate-300 text-lg">
-            A cosmic, high-performance workspace with an interactive fintech cover. Smooth motions, creator-focused tooling, and fast iteration.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <motion.a
-              whileHover={prefersReduced ? undefined : { scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              href="#pricing"
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-white/10 px-5 py-3 text-white font-medium shadow hover:bg-white/20 transition-colors border border-white/10 backdrop-blur"
-            >
-              <Rocket className="h-4 w-4" /> View Pricing
-            </motion.a>
-            <motion.a
-              whileHover={prefersReduced ? undefined : { scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              href="#features"
-              className="inline-flex items-center justify-center rounded-md bg-black/40 px-5 py-3 text-white font-medium border border-white/10 hover:bg.black/50 hover:bg-black/50 transition-colors"
-            >
-              See features
-            </motion.a>
+          <motion.p
+            className="mt-6 max-w-2xl text-base sm:text-lg text-slate-300"
+            initial={shouldReduce ? false : { opacity: 0, y: 12 }}
+            animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+            style={{ willChange: 'transform' }}
+          >
+            {subtitle}
+          </motion.p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <CTA href="#pricing" label="View Pricing" />
+            <CTA href="#features" label="Explore Features" variant="ghost" />
           </div>
-          <p className="mt-3 text-xs text-slate-400">For learning and private testing. Respect platform rules and local laws.</p>
-        </motion.div>
+        </div>
       </div>
     </section>
-  )
+  );
+}
+
+function CTA({ href, label, variant = 'primary' }) {
+  const base = 'inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition-transform active:scale-95';
+  if (variant === 'ghost') {
+    return (
+      <a href={href} className={`${base} border border-white/10 text-slate-100/90 hover:text-slate-100 bg-white/5 hover:bg-white/10`}>
+        {label}
+      </a>
+    );
+  }
+  return (
+    <a
+      href={href}
+      className={`${base} bg-gradient-to-r from-white to-orange-300 text-black hover:from-white hover:to-orange-200`}
+    >
+      {label}
+    </a>
+  );
 }
