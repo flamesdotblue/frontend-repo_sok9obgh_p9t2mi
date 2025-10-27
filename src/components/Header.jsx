@@ -15,7 +15,7 @@ export default function Header() {
       />
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
         <div className="h-16 flex items-center justify-between">
-          <a href="/" className="group inline-flex items-center gap-2 text-white font-semibold">
+          <a href="#" className="group inline-flex items-center gap-2 text-white font-semibold">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-tr from-fuchsia-600 to-pink-500 text-white shadow shadow-fuchsia-600/20">
               <Rocket className="h-5 w-5" />
             </span>
@@ -24,7 +24,8 @@ export default function Header() {
           <nav className="hidden sm:flex items-center gap-6 text-sm text-slate-300">
             {[
               { href: '#features', label: 'Features' },
-              { href: '#docs', label: 'Docs' },
+              { href: '#pricing', label: 'Pricing' },
+              { href: '#faq', label: 'FAQ' },
               { href: '#download', label: 'Download' },
             ].map((link) => (
               <a key={link.href} href={link.href} className="relative hover:text-white transition-colors group">

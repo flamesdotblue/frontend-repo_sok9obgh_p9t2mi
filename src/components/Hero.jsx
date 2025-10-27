@@ -1,19 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Sparkles, Rocket } from 'lucide-react'
 import Spline from '@splinetool/react-spline'
 import { motion } from 'framer-motion'
 
+function Typewriter({ text, speed = 35 }) {
+  const [display, setDisplay] = useState('')
+  const [idx, setIdx] = useState(0)
+
+  useEffect(() => {
+    setDisplay('')
+    setIdx(0)
+  }, [text])
+
+  useEffect(() => {
+    if (idx > text.length) return
+    const id = setTimeout(() => {
+      setDisplay(text.slice(0, idx))
+      setIdx((i) => i + 1)
+    }, speed)
+    return () => clearTimeout(id)
+  }, [idx, text, speed])
+
+  return (
+    <span>
+      {display}
+      <span className="inline-block w-[1px] translate-y-1 ml-[2px] h-7 bg-white/80 animate-pulse" aria-hidden />
+    </span>
+  )
+}
+
 export default function Hero() {
   return (
     <section className="relative min-h-[72vh] md:min-h-[82vh] overflow-hidden">
-      {/* Spline full-cover background (lightweight cover asset) */}
+      {/* Spline full-cover background (black hole cover asset) */}
       <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/kqB-rdL4TCJ7pyGb/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        <Spline scene="https://prod.spline.design/t7ourXf4CdN9XTF3/scene.splinecode" style={{ width: '100%', height: '100%' }} />
       </div>
 
-      {/* One subtle gradient overlay that won't block interactions */}
+      {/* Single subtle gradient overlay that won't block interactions */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/40"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"
         aria-hidden
       />
 
@@ -29,19 +55,19 @@ export default function Hero() {
             <Sparkles className="h-4 w-4 text-fuchsia-400" /> Fresh build
           </span>
           <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white">
-            Swyra — a modern Roblox scripting runtime
+            <Typewriter text="Swyra — a modern Roblox scripting runtime" speed={22} />
           </h1>
           <p className="mt-4 text-slate-300 text-lg">
-            Smooth, creator-focused tooling with a clean UI and fast iteration. Lightweight visuals for great performance on any device.
+            A cosmic, high-performance workspace with a black hole backdrop. Smooth motions, creator-focused tooling, and fast iteration.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <motion.a
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              href="#download"
+              href="#pricing"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-white/10 px-5 py-3 text-white font-medium shadow hover:bg-white/20 transition-colors border border-white/10 backdrop-blur"
             >
-              <Rocket className="h-4 w-4" /> Download
+              <Rocket className="h-4 w-4" /> View Pricing
             </motion.a>
             <motion.a
               whileHover={{ scale: 1.03, y: -2 }}
