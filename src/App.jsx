@@ -17,12 +17,17 @@ export default function App() {
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(99,102,241,0.25),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(168,85,247,0.2),transparent_55%)]" aria-hidden />
               <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight">Ready to launch your next idea?</h3>
-                  <p className="mt-2 text-slate-300 max-w-prose">Ship a polished MVP with a dark, futuristic aesthetic and a delightful experience.</p>
+                  <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight">Build, test, and ship your scripting tools</h3>
+                  <p className="mt-2 text-slate-300 max-w-prose">A focused workflow with a dark, immersive canvas. Designed for customization and extensibility.</p>
                 </div>
-                <a href="#" className="inline-flex items-center justify-center rounded-md bg-white/10 px-5 py-3 text-white font-semibold shadow hover:bg-white/20 transition-colors border border-white/10 backdrop-blur">
-                  Create project
-                </a>
+                <div className="flex gap-3">
+                  <a href="#download" className="inline-flex items-center justify-center rounded-md bg-white/10 px-5 py-3 text-white font-semibold shadow hover:bg-white/20 transition-colors border border-white/10 backdrop-blur">
+                    Download
+                  </a>
+                  <a href="#docs" className="inline-flex items-center justify-center rounded-md bg-black/40 px-5 py-3 text-white font-semibold border border-white/10 hover:bg-black/50 transition-colors">
+                    View Docs
+                  </a>
+                </div>
               </div>
             </div>
           </div>

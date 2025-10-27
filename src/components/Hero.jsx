@@ -18,22 +18,23 @@ export default function Hero() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur">
-            <Sparkles className="h-4 w-4 text-indigo-400" /> New launch
+            <Sparkles className="h-4 w-4 text-indigo-400" /> New release
           </span>
           <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white">
-            Build futuristic apps, faster
+            Roblox scripting runtime built for creators
           </h1>
           <p className="mt-4 text-slate-300 text-lg">
-            A dark, cosmic aesthetic paired with modern UI patterns. Design, prototype, and ship with confidence.
+            A streamlined environment for running and testing Lua scripts in a controlled, educational context. Clean UI, fast attach, and a delightful experience.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <a href="#cta" className="inline-flex items-center justify-center rounded-md bg-white/10 px-5 py-3 text-white font-medium shadow hover:bg-white/20 transition-colors border border-white/10 backdrop-blur">
-              Get started
+            <a href="#download" className="inline-flex items-center justify-center rounded-md bg-white/10 px-5 py-3 text-white font-medium shadow hover:bg-white/20 transition-colors border border-white/10 backdrop-blur">
+              Download
             </a>
             <a href="#features" className="inline-flex items-center justify-center rounded-md bg-black/40 px-5 py-3 text-white font-medium border border-white/10 hover:bg-black/50 transition-colors">
               See features
             </a>
           </div>
+          <p className="mt-3 text-xs text-slate-400">For learning and private testing. Respect platform rules and local laws.</p>
         </div>
       </div>
     </section>

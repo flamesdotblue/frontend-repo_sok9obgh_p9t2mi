@@ -4,18 +4,18 @@ import { CheckCircle2, Shield, Zap } from 'lucide-react'
 const features = [
   {
     icon: <Zap className="h-5 w-5 text-indigo-400" />,
-    title: 'Blazing fast',
-    desc: 'Optimized build setup and snappy UI. Spend time building, not wiring.'
+    title: 'High performance',
+    desc: 'Optimized pipeline for quick attach and responsive UI so you spend time creating, not waiting.'
   },
   {
     icon: <Shield className="h-5 w-5 text-indigo-400" />,
-    title: 'Best practices',
-    desc: 'Accessible components, responsive layouts, and production-ready patterns.'
+    title: 'Safety-first design',
+    desc: 'Sandboxed runtime with smart prompts and crash guards to keep sessions stable while you test.'
   },
   {
     icon: <CheckCircle2 className="h-5 w-5 text-indigo-400" />,
-    title: 'Delightful DX',
-    desc: 'Hot reloading, type-friendly patterns, and a clean structure you can extend.'
+    title: 'Developer friendly',
+    desc: 'Clean layout, readable logs, and extensible modules for your workflow.'
   }
 ]
 
@@ -24,8 +24,8 @@ export default function Features() {
     <section id="features" className="py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">Everything you need to start</h2>
-          <p className="mt-3 text-slate-300">Modular pieces that cover the essentials so you can launch in hours, not weeks.</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">Everything you need for scripting</h2>
+          <p className="mt-3 text-slate-300">Focused tools to run and iterate quickly in a controlled environment.</p>
         </div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((f, i) => (
