@@ -9,10 +9,10 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-300"
         >
-          <p>© {new Date().getFullYear()} Nebula Executor. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Swyra. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a href="#privacy" className="hover:text-white">Privacy</a>
             <a href="#terms" className="hover:text-white">Terms</a>
